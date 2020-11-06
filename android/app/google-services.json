@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "322902999791",
+    "firebase_url": "https://demophonelogin-79fee.firebaseio.com",
+    "project_id": "demophonelogin-79fee",
+    "storage_bucket": "demophonelogin-79fee.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:322902999791:android:b6cdea179f39eccd31d11a",
+        "android_client_info": {
+          "package_name": "comdesign.example.firebase_user_login"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "322902999791-c28bjkjrjnt51mrckl6bfl01leq44tdk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBr7ZgReekxsBoe_vwgnvyAWMJGE5sngaU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "322902999791-c28bjkjrjnt51mrckl6bfl01leq44tdk.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
