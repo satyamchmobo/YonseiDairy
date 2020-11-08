@@ -3,6 +3,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:carousel_pro/carousel_pro.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:firebase_user_login/allproducts.dart';
+import 'package:firebase_user_login/cart/cart_list.dart';
+import 'package:firebase_user_login/cartList.dart';
 import 'package:firebase_user_login/country.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_user_login/fintness_app_theme.dart';
@@ -23,11 +25,14 @@ class HomePage extends StatefulWidget {
   HomePage({this.fireUser});
 
   @override
-  _HomePageState createState() => _HomePageState();
+  _HomePageState createState() => _HomePageState(fireUser1: fireUser);
 }
 
 class _HomePageState extends State<HomePage> {
   
+FirebaseUser fireUser1;
+
+  _HomePageState({this.fireUser1});
 
   //final MealsListData mealsListData=new MealsListData();
   List<MealsListData> mealsListData = MealsListData.tabIconsList;
@@ -80,10 +85,18 @@ class _HomePageState extends State<HomePage> {
         // ).p(8),
         Padding(
           padding: const EdgeInsets.fromLTRB(3, 0, 6, 0),
-          child: Icon(
-            Icons.shopping_cart,
-            size: 25,
-            color: Colors.yellow[800],
+          child: InkWell(onTap: () {
+     Navigator.push(
+                        context, //here we are passing the values of  product to proddta
+                        MaterialPageRoute(
+                            builder: (context) => CartList(fireUser: fireUser1,)),
+                      );
+          },
+                      child: Icon(
+              Icons.shopping_cart,
+              size: 25,
+              color: Colors.yellow[800],
+            ),
           ),
         ),
       ],
@@ -389,11 +402,13 @@ class _HomePageState extends State<HomePage> {
                     color: Colors.yellow[800],
                   ),
                   onPressed: () {
+                    
 
  Navigator.push(
                   context,
                   MaterialPageRoute(
                       builder: (context) => AllProducts(
+                        user: fireUser1,
                             //fireUser: user1,
                           )),
                 );

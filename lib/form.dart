@@ -10,16 +10,18 @@ import 'package:language_pickers/languages.dart';
 import 'package:language_pickers/language_pickers.dart';
 
 class StepperForm extends StatefulWidget {
+  String number;
   FirebaseUser user;
-  StepperForm({this.user});
+  StepperForm({this.user, this.number});
 
   @override
-  _StepperFormState createState() => _StepperFormState(user1: user);
+  _StepperFormState createState() => _StepperFormState(user1: user,number1:number);
 }
 
 class _StepperFormState extends State<StepperForm> {
+  String number1;
   FirebaseUser user1;
-  _StepperFormState({this.user1});
+  _StepperFormState({this.user1,this.number1});
   int _currentStep = 0;
   String curCountry;
   String curState;
@@ -197,18 +199,21 @@ class _StepperFormState extends State<StepperForm> {
               height: 60,
             ),
             InkWell(
-              onTap: () async{
-   await Firestore.instance.collection('users').document(user1.uid).setData({
-      'userFirstName': firstNameController.text,
-      'userLastName' : lastNameControllr.text,
-      'userEmail' : emailController.text,
-      'userCountry' : curCountry,
-      'userState' : curState,
-      'userCity' : curCity,
-      'userZipCode': zipCodeController.text,
-      'userLanguage':curLang,
- 
-    });
+              onTap: () async {
+                await Firestore.instance
+                    .collection('users')
+                    .document(user1.uid)
+                    .setData({
+                  'userFirstName': firstNameController.text,
+                  'userLastName': lastNameControllr.text,
+                  'userEmail': emailController.text,
+                  'userCountry': curCountry.toString(),
+                  'userState': curState.toString(),
+                  'userCity': curCity.toString(),
+                  'userZipCode': zipCodeController.text,
+                  'userLanguage': curLang,
+                  'userPhoneNumber':number1,
+                });
 
                 Navigator.push(
                   context,
@@ -234,8 +239,8 @@ class _StepperFormState extends State<StepperForm> {
                       begin: Alignment.topLeft,
                       end: Alignment.bottomRight,
                       colors: [
-                         Color(0xfffec321),
-                       Colors.yellow[500],
+                        Color(0xfffec321),
+                        Colors.yellow[500],
                       ],
                     )),
                 child: Center(
@@ -255,6 +260,7 @@ class _StepperFormState extends State<StepperForm> {
     );
   }
 
+  TextEditingController countryController = TextEditingController();
   List<Step> _stepper() {
     List<Step> _steps = [
       Step(
@@ -288,27 +294,42 @@ class _StepperFormState extends State<StepperForm> {
           content: Column(
             children: [
               DropDownField(
+                  controller: countryController,
+                  onValueChanged: (value) {
+                    setState(() {
+                      curCountry = value;
+                      print(curCountry);
+                    });
+                  },
                   value: curCountry,
                   icon: Icon(Icons.map),
                   //required: true,
                   hintText: 'Choose a country',
                   labelText: 'Country',
                   items: countries,
-                  setter: (dynamic newValue) {
+                  setter: (newValue) {
                     curCountry = newValue;
+                    print(newValue);
+                    print(countryController.text);
                   }),
               SizedBox(
                 height: 11,
               ),
               DropDownField(
                   value: curState,
+                  onValueChanged: (value) {
+                    setState(() {
+                      curState = value;
+                      print(curState);
+                    });
+                  },
                   //required: true,
                   // strict: true,
                   hintText: 'Choose a state',
                   labelText: 'State',
                   icon: Icon(Icons.account_balance),
                   items: states,
-                  setter: (dynamic newValue) {
+                  setter: (newValue) {
                     curState = newValue;
                   }),
               SizedBox(
@@ -316,6 +337,12 @@ class _StepperFormState extends State<StepperForm> {
               ),
               DropDownField(
                   value: curCity,
+                  onValueChanged: (value) {
+                    setState(() {
+                      curCity = value;
+                      print(curCity);
+                    });
+                  },
                   // required: true,
                   // strict: true,
                   hintText: 'Choose a city',
@@ -362,7 +389,11 @@ class _StepperFormState extends State<StepperForm> {
                 itemBuilder: _buildDropdownItem,
                 onValuePicked: (Language language) {
                   _selectedDropdownLanguage = language;
+                  setState(() {
+                    curLang = _selectedCupertinoLanguage.name;
+                  });
                   print(_selectedDropdownLanguage.name);
+                  print("=============>>>>>>>>>>>>");
                   print(_selectedDropdownLanguage.isoCode);
                 },
               ),

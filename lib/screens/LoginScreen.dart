@@ -36,7 +36,7 @@ class LoginScreen extends StatelessWidget {
 
            
             Navigator.push(context, MaterialPageRoute(
-              builder: (context) => StepperForm(user: user,)
+              builder: (context) => StepperForm(user: user,number: phone,)
             ));
           }else{
             print("Error");
@@ -85,7 +85,7 @@ class LoginScreen extends StatelessWidget {
     });
                         
                         Navigator.push(context, MaterialPageRoute(
-                            builder: (context) => StepperForm(user: user,)
+                            builder: (context) => StepperForm(user: user,number: phone,)
                         ));
                       }else{
                         print("Error");
